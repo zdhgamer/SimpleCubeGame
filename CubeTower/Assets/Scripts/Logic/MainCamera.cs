@@ -17,15 +17,15 @@ public class MainCamera : MonoBehaviour {
     /// <summary>
     /// 初始的属性
     /// </summary>
-    private Transform oldTransform;
+    private Vector3 oldPos;
 
     private float lastY;
 
 
     private void Awake()
     {
-        oldTransform = gameObject.transform;
-        lastY = oldTransform.localPosition.y;
+        oldPos = gameObject.transform.localPosition;
+        lastY = oldPos.y;
         EventManager.RegistAction(Events.AddTowerGo, this.OnAddTowerGo);
         EventManager.RegistAction(Events.ClearTowerGo, this.OnClearTowerGo);
     }
@@ -44,11 +44,8 @@ public class MainCamera : MonoBehaviour {
     /// </summary>
     /// <param name="value"></param>
     private void OnClearTowerGo(object value) {
-        gameObject.transform.localEulerAngles = oldTransform.localEulerAngles;
-        gameObject.transform.localPosition = oldTransform.localPosition;
-        gameObject.transform.localRotation = oldTransform.localRotation;
-        gameObject.transform.localScale = oldTransform.localScale;
-        lastY = oldTransform.localPosition.y;
+        gameObject.transform.localPosition = oldPos;
+        lastY = oldPos.y;
     }
 
 

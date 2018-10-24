@@ -24,6 +24,15 @@ public class Cube : MonoBehaviour {
     /// </summary>
     private float moveSpeed = 1.0f;
 
+    /// <summary>
+    /// 是否可以下降
+    /// </summary>
+    private bool canDownMove = false;
+
+    /// <summary>
+    /// 下降速度
+    /// </summary>
+    private float downMoveSpeed = 5.0f;
 
     /// <summary>
     /// 当前移动方向
@@ -82,6 +91,32 @@ public class Cube : MonoBehaviour {
         }
     }
 
+    public bool CanDownMove
+    {
+        get
+        {
+            return canDownMove;
+        }
+
+        set
+        {
+            canDownMove = value;
+        }
+    }
+
+    public MoveEnumDirEnum NowMoveDir
+    {
+        get
+        {
+            return nowMoveDir;
+        }
+
+        set
+        {
+            nowMoveDir = value;
+        }
+    }
+
 
     /// <summary>
     /// 初始化数据
@@ -94,18 +129,18 @@ public class Cube : MonoBehaviour {
         this.gameObject.transform.localPosition = pos;
         this.gameObject.transform.localScale = size;
         this.moveSpeed = moveSpeed;
-        this.nowMoveDir = moveEnumDirEnum;
+        this.NowMoveDir = moveEnumDirEnum;
     }
 
     private void Update()
     {
         if (canMove) {
-            switch (nowMoveDir) {
+            switch (NowMoveDir) {
                 //x轴负移动
                 case MoveEnumDirEnum.SubXDir:
                     gameObject.transform.localPosition += Vector3.left * moveSpeed * Time.deltaTime;
                     if (gameObject.transform.localPosition.x<=-GameConfig.maxXCanMove) {
-                        nowMoveDir = MoveEnumDirEnum.XDir;
+                        NowMoveDir = MoveEnumDirEnum.XDir;
                     }
                     break;
                 //z负移动
@@ -113,7 +148,7 @@ public class Cube : MonoBehaviour {
                     gameObject.transform.localPosition += Vector3.back * moveSpeed * Time.deltaTime;
                     if (gameObject.transform.localPosition.z <= -GameConfig.maxZCanMove)
                     {
-                        nowMoveDir = MoveEnumDirEnum.ZDir;
+                        NowMoveDir = MoveEnumDirEnum.ZDir;
                     }
                     break;
                 //x正移动
@@ -121,7 +156,7 @@ public class Cube : MonoBehaviour {
                     gameObject.transform.localPosition += Vector3.right * moveSpeed * Time.deltaTime;
                     if (gameObject.transform.localPosition.x >= GameConfig.maxXCanMove)
                     {
-                        nowMoveDir = MoveEnumDirEnum.SubXDir;
+                        NowMoveDir = MoveEnumDirEnum.SubXDir;
                     }
                     break;
                 //z正移动
@@ -129,9 +164,18 @@ public class Cube : MonoBehaviour {
                     gameObject.transform.localPosition += Vector3.forward * moveSpeed * Time.deltaTime;
                     if (gameObject.transform.localPosition.z >= GameConfig.maxZCanMove)
                     {
-                        nowMoveDir = MoveEnumDirEnum.SubZDir;
+                        NowMoveDir = MoveEnumDirEnum.SubZDir;
                     }
                     break;
+            }
+        }
+
+        if (canDownMove) {
+            gameObject.transform.localPosition += Vector3.down * downMoveSpeed * Time.deltaTime;
+            if (gameObject.transform.localPosition.y<=-10.0f) {
+                canDownMove = false;
+                gameObject.SetActive(false);
+                Destroy(gameObject);
             }
         }
     }

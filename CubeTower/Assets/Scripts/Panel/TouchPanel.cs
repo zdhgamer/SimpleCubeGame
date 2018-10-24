@@ -24,7 +24,8 @@ public class TouchPanel : BasePanel
     /// 返回按钮点击事件
     /// </summary>
     public void OnBackClick() {
-
+        EventManager.CallAction(Events.BackMain, null);
+        gameObject.SetActive(false);
     }
 
     /// <summary>

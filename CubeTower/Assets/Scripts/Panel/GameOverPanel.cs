@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameOverPanel : BasePanel
 {
+    /// <summary>
+    /// 显示分数
+    /// </summary>
+    [SerializeField]
+    private Text socreText;
+
     public override void RegistAction()
     {
         base.RegistAction();
@@ -22,7 +29,7 @@ public class GameOverPanel : BasePanel
 
 
     /// <summary>
-    /// 返回按钮点击事件
+    /// 重新开始按钮点击事件
     /// </summary>
     public void OnReStartClick()
     {
@@ -46,6 +53,7 @@ public class GameOverPanel : BasePanel
     /// <param name="value"></param>
     private void OnGameOver(object value)
     {
+        socreText.text = value.ToString();
         gameObject.SetActive(true);
     }
 
