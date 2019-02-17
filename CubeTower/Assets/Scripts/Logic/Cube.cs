@@ -22,7 +22,7 @@ public class Cube : MonoBehaviour {
     /// <summary>
     /// 移动速度
     /// </summary>
-    private float moveSpeed = 1.0f;
+    private float moveSpeed = 3.0f;
 
     /// <summary>
     /// 是否可以下降
